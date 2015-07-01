@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="{{locale}}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="{{{meta.description}}}" >
+    <meta name="keywords" content="{{{meta.keywords}}}" >
+    <link rel="icon" type="image/ico" href="/favicon.ico">
+    <style>
+        .firstload {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 9999;
+            background: #fff;
+            display: block;
+        }
+        .firstload::after {
+             content: '';
+             background-image: url(data:image/svg+xml;base64,PCEtLSBCeSBTYW0gSGVyYmVydCAoQHNoZXJiKSwgZm9yIGV2ZXJ5b25lLiBNb3JlIEAgaHR0cDovL2dvby5nbC83QUp6YkwgLS0+DQo8c3ZnIHdpZHRoPSI0NCIgaGVpZ2h0PSI0NCIgdmlld0JveD0iMCAwIDQ0IDQ0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0cm9rZT0iIzAwMCI+DQogICAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2Utd2lkdGg9IjIiPg0KICAgICAgICA8Y2lyY2xlIGN4PSIyMiIgY3k9IjIyIiByPSIxIj4NCiAgICAgICAgICAgIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InIiDQogICAgICAgICAgICAgICAgYmVnaW49IjBzIiBkdXI9IjEuOHMiDQogICAgICAgICAgICAgICAgdmFsdWVzPSIxOyAyMCINCiAgICAgICAgICAgICAgICBjYWxjTW9kZT0ic3BsaW5lIg0KICAgICAgICAgICAgICAgIGtleVRpbWVzPSIwOyAxIg0KICAgICAgICAgICAgICAgIGtleVNwbGluZXM9IjAuMTY1LCAwLjg0LCAwLjQ0LCAxIg0KICAgICAgICAgICAgICAgIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiAvPg0KICAgICAgICAgICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ic3Ryb2tlLW9wYWNpdHkiDQogICAgICAgICAgICAgICAgYmVnaW49IjBzIiBkdXI9IjEuOHMiDQogICAgICAgICAgICAgICAgdmFsdWVzPSIxOyAwIg0KICAgICAgICAgICAgICAgIGNhbGNNb2RlPSJzcGxpbmUiDQogICAgICAgICAgICAgICAga2V5VGltZXM9IjA7IDEiDQogICAgICAgICAgICAgICAga2V5U3BsaW5lcz0iMC4zLCAwLjYxLCAwLjM1NSwgMSINCiAgICAgICAgICAgICAgICByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgLz4NCiAgICAgICAgPC9jaXJjbGU+DQogICAgICAgIDxjaXJjbGUgY3g9IjIyIiBjeT0iMjIiIHI9IjEiPg0KICAgICAgICAgICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iciINCiAgICAgICAgICAgICAgICBiZWdpbj0iLTAuOXMiIGR1cj0iMS44cyINCiAgICAgICAgICAgICAgICB2YWx1ZXM9IjE7IDIwIg0KICAgICAgICAgICAgICAgIGNhbGNNb2RlPSJzcGxpbmUiDQogICAgICAgICAgICAgICAga2V5VGltZXM9IjA7IDEiDQogICAgICAgICAgICAgICAga2V5U3BsaW5lcz0iMC4xNjUsIDAuODQsIDAuNDQsIDEiDQogICAgICAgICAgICAgICAgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIC8+DQogICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJzdHJva2Utb3BhY2l0eSINCiAgICAgICAgICAgICAgICBiZWdpbj0iLTAuOXMiIGR1cj0iMS44cyINCiAgICAgICAgICAgICAgICB2YWx1ZXM9IjE7IDAiDQogICAgICAgICAgICAgICAgY2FsY01vZGU9InNwbGluZSINCiAgICAgICAgICAgICAgICBrZXlUaW1lcz0iMDsgMSINCiAgICAgICAgICAgICAgICBrZXlTcGxpbmVzPSIwLjMsIDAuNjEsIDAuMzU1LCAxIg0KICAgICAgICAgICAgICAgIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiAvPg0KICAgICAgICA8L2NpcmNsZT4NCiAgICA8L2c+DQo8L3N2Zz4NCg==);
+             background-repeat: no-repeat;
+             height: 44px;
+             width: 44px;
+             position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+         }
+    </style>
+    {{#each assets.style}}
+      <link rel="stylesheet" href="{{this}}">
+    {{/each}}
+    <title>{{{title}}}</title>
+  </head>
+  <body>
+    {{{body}}}
+    {{#each assets.script}}
+      <script src="{{this}}"></script>
+    {{/each}}
+  </body>
+</html>

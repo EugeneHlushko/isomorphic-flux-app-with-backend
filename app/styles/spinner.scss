@@ -1,0 +1,28 @@
+@import './mixins/prefixes';
+
+.app--spinner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 9999;
+    background: rgba(255,255,255,0.8);
+    display: none;
+
+    &.active {
+    display: block;
+    }
+
+    &:after {
+        content: '';
+        background-image: url('../images/spinner.svg');
+        background-repeat: no-repeat;
+        height: 44px;
+        width: 44px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        @include transform(translate(-50%,-50%));
+    }
+}
