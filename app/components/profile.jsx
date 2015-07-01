@@ -86,10 +86,11 @@ export default class Profile extends React.Component {
   _goBackHandler = this._goBackHandler.bind(this)
   _goBackHandler() {
     debug('dev')('we can go back!!!');
-    this.context.router.goBack();
+    this.context.router.transitionTo('/');
   }
-
+  loginButton = '';
   render() {
+    debug('dev')('~~~~~~~~~~~~~~~~', this.context.router);
     if (this.state.user) {
       const user: Object = this.state.user;
       return (
