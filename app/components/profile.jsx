@@ -62,8 +62,8 @@ export default class Profile extends React.Component {
     let title: string;
 
     if (this.state.user) {
-      const user: Object = this.state.user.user;
-      const fullName: string = this._getFullName(user.name);
+      const user: Object = this.state.user;
+      const fullName: string = this._getFullName(user.first, user.last);
 
       title = this._getIntlMessage('profile.page-title');
       title = this._formatMessage(title, {fullName});
@@ -79,8 +79,8 @@ export default class Profile extends React.Component {
       .set(title);
   }
 
-  _getFullName({first, last}) {
-    return `${capitalize(first)} ${capitalize(last)}`;
+  _getFullName(first, last) {
+    return `${first} ${last}`;
   }
 
   _goBackHandler = this._goBackHandler.bind(this)
@@ -91,10 +91,10 @@ export default class Profile extends React.Component {
 
   render() {
     if (this.state.user) {
-      const user: Object = this.state.user.user;
+      const user: Object = this.state.user;
       return (
         <div className='app--profile'>
-          <h2>{this._getFullName(user.name)}</h2>
+          <h2>{this._getFullName(user.first, user.last)}</h2>
           <img
             src={user.pic}
             alt='profile picture' />

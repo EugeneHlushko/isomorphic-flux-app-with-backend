@@ -11,8 +11,9 @@ class UsersStore {
   }
 
   static getBySeed(seed) {
+    debug('dev')('**************** in get by seed', this.getState().users, 'seed was ', seed);
     const users: Array<Object> = this.getState().users;
-    return {user: users.find((user) => user.seed === seed)};
+    return {user: users.find((user) => (parseInt(user.id) === parseInt(seed)))};
   }
 
   onRemove(index) {
