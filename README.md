@@ -1,7 +1,7 @@
 # Going further, we will have backend, relational db connected to our stores.
 # all Running on koa, will soon move to react-router ^1.0
 
-# Built on top of isomorphic flux boilerplate, by iam4x
+# Built on top of isomorphic flux boilerplate, by [iam4x](https://github.com/iam4x/)
 
 # Readme of how-to:
 
