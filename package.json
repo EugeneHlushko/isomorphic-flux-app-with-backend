@@ -10,6 +10,10 @@
     "postinstall": "npm run build"
   },
   "author": "EugeneHlushko",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EugeneHlushko/isomorphic-flux-app-with-backend.git"
+  },
   "license": "MIT",
   "dependencies": {
     "alt": "0.16.7",
@@ -36,12 +40,11 @@
     "koa-static-cache": "^3.1.0",
     "lodash": "^3.6.0",
     "lru-cache": "^2.6.2",
-    "modularized-normalize-scss": "git://github.com/hail2u/normalize.scss.git",
+    "modularized-normalize-scss": "^3.0.3",
     "mysql": "^2.7.0",
     "react": "^0.13.3",
     "react-intl": "^1.2.0",
     "react-router": "^0.13.3",
-    "request": "^2.58.0",
     "sql": "^0.52.0",
     "superagent": "^1.1.0",
     "url": "^0.10.3",

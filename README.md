@@ -1,11 +1,16 @@
 # Going further, we will have backend, relational db connected to our stores.
-# all Running on koa, will soon move to react-router ^1.0
+All Running on koa, will soon move to react-router ^1.0
+Built on top of isomorphic flux boilerplate, by [iam4x](https://github.com/iam4x/)
 
-# Built on top of isomorphic flux boilerplate, by [iam4x](https://github.com/iam4x/)
+## installation of DB
+ 
+    Create mysql database, import db from /db/dump.sql
+    Go to /server/db-sample.js and replace credentials with yours.
+    `!without db it wont work`
+
+
 
 # Readme of how-to:
-
-## TL;DR
 
 Use with `iojs^1.8.0` or `nodejs^0.12.0`, clone the repo, `npm install` and `npm run dev`.
 
@@ -56,17 +61,36 @@ Wrap data-fetching requests from actions into promises and send them to `altReso
 
 ```
 fetch() {
-  const promise = (resolve) => {
-    request
-      .get('http://example.com/api/users')
-      .end((response) => {
-        // fire new action to send data to store
-        this.actions.fetchSuccess(response.body);
-        return resolve();
-      });
-  };
-  // Send the `promise` to altResolver
-  this.alt.resolve(promise);
+	// cache this because inside of xhr it will refer to xhr instance
+	var prv = this;
+	//declare a promise
+	const promise = (resolve) => {
+		// trigger start loading action ( show spinner )
+		this.alt.getActions('requests').start();
+		// declare new xhr and handle response onreadystatechange (it will happen after we .open)
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200) {
+					// if we have 200 OK status on response, lets parse it and go further with it
+					var _json = JSON.parse(xhr.responseText);
+					debug('dev')(_json);
+					prv.actions.fetchSuccess(_json);
+					prv.alt.getActions('requests').success();
+					// return a resolve()
+					return resolve();
+				}
+				else {
+					debug('dev')('XHR failed, msg: ', xhr.responseText);
+				}
+			}
+		};
+		// open and send a request
+		xhr.open('GET', 'http://localhost:3000/api/users');
+		xhr.send();
+	};
+	// pass promise to alt, it will resolve it for us
+	this.alt.resolve(promise);
 }
 ```
 
