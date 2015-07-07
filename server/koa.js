@@ -17,6 +17,7 @@ import config from './config/init';
 // REST API
 import userApiRoute from './api/users';
 import userPostApiRoute from './api/usersPost';
+import userDeleteApiRoute from './api/usersDelete';
 
 const app = koa();
 const env = process.env.NODE_ENV || 'development';
@@ -73,6 +74,7 @@ else {
 // actually add route for api
 app.use(userApiRoute);
 app.use(userPostApiRoute);
+app.use(userDeleteApiRoute);
 
 app.use(router);
 app.listen(config.port);

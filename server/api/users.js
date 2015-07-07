@@ -58,11 +58,13 @@ export default route.get(
       if ( _isEmpty() ) {
         _dbConn.query(_query.text, (err, rows, fields) => {
           if (err) throw err;
+					_dbConn.end();
           callback(null, rows);  
         });   
       } else {
         _dbConn.query(_query.text, _query.values, (err, rows, fields) => {
           if (err) throw err;
+					_dbConn.end();
           callback(null, rows);  
         }); 
       }         

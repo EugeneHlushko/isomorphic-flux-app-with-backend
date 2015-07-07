@@ -7,22 +7,20 @@ import debug from 'debug'
 // set dialect to mysql
 sql.setDialect('mysql');
   
-export default route.post(
+export default route.delete(
   '/api/users',
   function *() {
     // first we check if mysql is connected
     var prv = this;
-		var __user = {}; // will hold info of user
     // TODO: check if user has rights to see this list
     var items = yield (callback) => {
       let raw = prv.request.url.split('?');
       let url_parts = url.parse(prv.request.url, true);
       
       //first we define our tables
-			var columnsArray = ['id', 'email', 'first', 'last', 'pic'];
       var usersTable = sql.define({
         name: 'users',
-        columns: columnsArray
+        columns: ['id', 'email', 'first', 'last', 'pic']
       });
           
       // check if object wasnt empty
@@ -34,32 +32,34 @@ export default route.post(
       }
       
       if ( _isEmpty() ) {
-        __user = {
-					email: 'ajoke@joke.com',
-					first: 'Firstname',
-					last: 'lastname',
-					pic: 'http://imgz.vol.io/rotahaber/newpics/news/280220142017150168175_3.jpg',
-				}
+				// no params received, die
+				debug('dev')('going to die');
+        callback(null, null);  
       } else {
+        var _query = usersTable
+          .delete()
+          .from(usersTable);
+        // additinal query for each of the get params added as where
         for (var key in url_parts.query) {
-					// check if param is one of user table cols
-					if ( columnsArray.indexOf(key) > -1 ) {
-						__user[key] = url_parts.query[key];
-					}
-        }        
-      }			
-
+            _query = _query.where(
+              usersTable[key].equals(url_parts.query[key])
+            );
+        }
+        _query = _query.toQuery();
+      }
       // run db connection
       var _api = new dbApi();
       _api.makeConnect();
       var _dbConn = _api.getConnection();
-			_dbConn.query('INSERT INTO users SET ?', __user, (err, rows, fields) => {
+      // for case without params run simple query, and if params, pass values as 2nd arg.
+			_dbConn.query(_query.text, _query.values, (err, rows, fields) => {
 				if (err) throw err;
 				_dbConn.end();
 				callback(null, rows);  
-			});
+			}); 
     };
-//		debug('dev')('we got next items on POST callback', items);
+    
+//    debug('dev')('items received', items);
     this.body = JSON.stringify(items);
   }
 )

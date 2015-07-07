@@ -54,7 +54,7 @@ export default class Users extends React.Component {
   _removeUser(index: number) {
     this.props.flux
       .getActions('users')
-      .remove(index);
+      .rremove(index);
   }
 
   _duplicateUser(index: number) {
@@ -84,7 +84,7 @@ export default class Users extends React.Component {
           <td className='text-center'>
             <button
               className='user--remove'
-              onClick={this._removeUser.bind(this, index)}>
+              onClick={this._removeUser.bind(this, user.id)}>
               X
             </button>
           </td>

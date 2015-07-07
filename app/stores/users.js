@@ -16,15 +16,21 @@ class UsersStore {
     return {user: users.find((user) => (parseInt(user.id) === parseInt(seed)))};
   }
 
-  onRemove(index) {
+  onRemoveSuccess(userId) {
     const users: Array<Object> = this.users.slice();
-    users.splice(index, 1);
-
+    let occurrence: ?Object = users.find((u) => u.id === userId);
+//    if (occurrence) {
+//      occurrence = userId;
+//    }
+    let __index = users.indexOf(occurrence);
+    debug('dev')('we got object to remove', occurrence, 'and we have users', users);
+    users.splice(__index, 1);
     return this.setState({users});
   }
 
   onAddSuccess(user) {
     const users: Array<Object> = this.users.slice();
+    debug('dev')('WE DID ADD A NICE USER', user);
     users.push(user);
     return this.setState({users});
   }

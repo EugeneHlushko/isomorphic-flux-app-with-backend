@@ -8,7 +8,7 @@ import XMLHttpRequest from 'xhr2';
 class UsersActions {
   constructor() {
     this.generateActions(
-      'remove', 'fetchSuccess', 'addSuccess',
+      'removeSuccess', 'fetchSuccess', 'addSuccess',
       'fetchBySeedSuccess', 'duplicateSuccess'
     );
   }
@@ -27,10 +27,12 @@ class UsersActions {
       this.alt.getActions('requests').start();
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function () {
+//        debug('dev')('XHR status changed', xhr.readyState);
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             debug('dev')('raw reply from server', JSON.parse(xhr.responseText));
-            const user: Object = JSON.parse(xhr.responseText)[0];
+            const responsified: Object = JSON.parse(xhr.responseText);
+            __userObj.id = responsified.insertId;
             prv.actions.addSuccess(__userObj);
             prv.alt.getActions('requests').success();
             return resolve();
@@ -41,6 +43,31 @@ class UsersActions {
         }
       };
       xhr.open('POST', `http://localhost:3000/api/users?${__userObjUrl}`);
+      xhr.send();
+//      debug('dev')('XHR SENT!');
+    };
+    this.alt.resolve(promise);
+  }
+	rremove(id: number) {
+    var prv = this;
+    const promise = (resolve) => {
+      this.alt.getActions('requests').start();
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            debug('dev')('raw reply from server', JSON.parse(xhr.responseText));
+            const responsified: Object = JSON.parse(xhr.responseText)[0];
+            prv.actions.removeSuccess(id);
+            prv.alt.getActions('requests').success();
+            return resolve();
+          }
+          else {
+            debug('dev')('XHR failed, msg: ', xhr.responseText);
+          }
+        }
+      };
+      xhr.open('DELETE', `http://localhost:3000/api/users?id=${id}`);
       xhr.send();
     };
     this.alt.resolve(promise);
