@@ -13,14 +13,35 @@ class UsersActions {
     );
   }
   add() {
-    const promise: Function = (resolve) => {
-      // fake xhr
+    var prv = this;
+    var __userObj = {
+			email: 'ajoke@joke.com',
+			first: 'Firstname',
+			last: 'lastname',
+			pic: 'http://imgz.vol.io/rotahaber/newpics/news/280220142017150168175_3.jpg',
+		};
+    var __userObjUrl = Object.keys(__userObj).map((key) => {
+      return key + '=' + __userObj[key];
+    }).join('&');
+    const promise = (resolve) => {
       this.alt.getActions('requests').start();
-      setTimeout(() => {
-        this.actions.addSuccess(sample(data.users));
-        this.alt.getActions('requests').success();
-        return resolve();
-      }, 300);
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            debug('dev')('raw reply from server', JSON.parse(xhr.responseText));
+            const user: Object = JSON.parse(xhr.responseText)[0];
+            prv.actions.addSuccess(__userObj);
+            prv.alt.getActions('requests').success();
+            return resolve();
+          }
+          else {
+            debug('dev')('XHR failed, msg: ', xhr.responseText);
+          }
+        }
+      };
+      xhr.open('POST', `http://localhost:3000/api/users?${__userObjUrl}`);
+      xhr.send();
     };
     this.alt.resolve(promise);
   }
@@ -85,16 +106,6 @@ class UsersActions {
       xhr.send();
     };
     this.alt.resolve(promise);
-//    const promise = (resolve) => {
-//      this.alt.getActions('requests').start();
-//      setTimeout(() => {
-//        const user: Object = data.users.find((u) => u.seed === seed);
-//        this.actions.fetchBySeedSuccess(user);
-//        this.alt.getActions('requests').success();
-//        return resolve();
-//      }, 300);
-//    };
-//    this.alt.resolve(promise);
   }
 }
 

@@ -15,7 +15,8 @@ import responseTime from 'koa-response-time';
 import router from './router';
 import config from './config/init';
 // REST API
-import getuserroute from './api/usersget'
+import userApiRoute from './api/users';
+import userPostApiRoute from './api/usersPost';
 
 const app = koa();
 const env = process.env.NODE_ENV || 'development';
@@ -70,7 +71,8 @@ else {
 }
 
 // actually add route for api
-app.use(getuserroute);
+app.use(userApiRoute);
+app.use(userPostApiRoute);
 
 app.use(router);
 app.listen(config.port);

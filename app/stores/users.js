@@ -26,7 +26,6 @@ class UsersStore {
   onAddSuccess(user) {
     const users: Array<Object> = this.users.slice();
     users.push(user);
-
     return this.setState({users});
   }
 
